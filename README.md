@@ -7,7 +7,7 @@ Purpose is to build web app where users can input their county, some demographic
 To Do:  
 [x] Import data  
 [x] Length of stay regression model  
-[] Total charges regression model  
+[x] Total charges regression model  
 [] __Streamlit app__  
   * [] basic app with inputs  
     * [] figure out how to make latitude and longitude input into county input for regression model   
