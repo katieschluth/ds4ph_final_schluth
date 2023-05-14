@@ -13,12 +13,6 @@ results = client.get("tg3i-cinn", limit=50000)
 nyd2019_50k = pd.DataFrame.from_records(results)
 nyd2019_50k.shape
 
-#go from county to latitiude longitude
-nomi = pgeocode.Nominatim('us')
-
-nomi.query_location("Bronx", top_k=3)
-## might need to go from inputted lat/long in the webapp to county name
-
 # predict total charges and length of stay from demographic variables
 
 ## length of stay
@@ -55,22 +49,20 @@ def main():
     # Create dropdown menus for user input
     input_features = ["Hospital County", "Age Group", "Sex", "Race", "Ethnicity", "Type of Admission", "Form of Payment"]
     options = {
-        "Hospital County": ["Bronx", "Cayuga", "Columbia", "Delaware", "Kings", "Manhattan", "Monroe", "Nassau", "Onondaga", "Ontario", "Orange", "Otsego", "Queens", "Rockland", "Steuben", "Sullivan", "Westchester"],
-        "Age Group": ["18 to 29", "30 to 49", "50 to 69", "70 to 79"],
-        "Sex": ["Male", "Female"],
-        "Race": ["Multi-racial", "Other Race", "White"],
-        "Ethnicity": ["Not Spanish/Hispanic", "Spanish/Hispanic", "Unknown"],
-        "Type of Admission": ["Emergency", "Newborn", "Not Available", "Trauma", "Urgent"],
-        "Form of Payment": ["Department of Corrections", "Federal/State/Local/VA", "Managed Care, Unspecified", "Medicaid", "Medicare", "Miscellaneous/Other", "Private Health Insurance", "Self-Pay"]
+        "Hospital County": ['Bronx', 'Manhattan', 'Kings', 'Queens', 'Rockland', 'Westchester', 'Onondaga', 'Nassau', 'Otsego', 'Delaware', 'Sullivan', 'Orange', 'Monroe', 'Ontario', 'Columbia', 'Albany', 'Steuben', 'Cayuga'],
+        "Age Group": ['0 to 17',"18 to 29", "30 to 49", "50 to 69", "70 or Older"],
+        "Sex": ["M", "F"],
+        "Race": ['White', 'Black/African American', 'Multi-racial','Other Race'],
+        "Ethnicity": ['Spanish/Hispanic','Not Span/Hispanic', 'Multi-ethnic'],
+        "Type of Admission": ['Emergency', 'Newborn', 'Elective', 'Urgent', 'Trauma'],
+        "Form of Payment": ['Medicare', 'Private Health Insurance', 'Medicaid','Blue Cross/Blue Shield', 'Self-Pay', 'Miscellaneous/Other','Managed Care, Unspecified', 'Department of Corrections','Federal/State/Local/VA']
     }
     user_inputs = [st.selectbox(f"Select {feature}", options=options[feature], key=feature) for feature in input_features]
     
     # Process user input and run the regression model
     if st.button("Predict Length of Stay and Total Charges"):
         # Convert user inputs to a DataFrame or the required format for the model
-        input_data = pd.DataFrame([user_inputs], columns=input_features)
-        
-        # Apply any necessary preprocessing to the input data
+        input_data = pd.DataFrame([user_inputs], columns=["hospital_county", "age_group", "gender", "race", "ethnicity", "type_of_admission", "payment_typology_1"])
         
         # Make predictions using the pre-trained model
         predict_stay = los_model.predict(input_data)
