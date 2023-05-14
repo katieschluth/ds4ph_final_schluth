@@ -30,3 +30,23 @@ los_model = smf.ols(formula='length_of_stay ~ C(hospital_county) + C(age_group) 
 nyd2019_50k['total_charges'] = pd.to_numeric(nyd2019_50k['total_charges'])
 
 charges_model = smf.ols(formula='total_charges ~ C(hospital_county) + C(age_group) + C(gender) + C(race) + C(ethnicity) + C(type_of_admission) + C(payment_typology_1)', data=nyd2019_50k).fit()
+
+def compare_los(pred_los, county):
+    county_df = nyd2019_los[nyd2019_los["hospital_county"] == county]
+    q1, q2 = county_df["length_of_stay"].quantile([1/3, 2/3])
+    if pred_los <q1:
+        return 'low'
+    elif pred_los <q2:
+        return 'typical'
+    else:
+        return 'high'
+    
+def compare_charges(pred_charges, county):
+    county_df = nyd2019_50k[nyd2019_50k["hospital_county"] == county]
+    q1, q2 = county_df["total_charges"].quantile([1/3,2/3])
+    if pred_charges < q1:
+        return 'low'
+    if pred_charges < q2:
+        return 'typical'
+    else:
+        return 'high'

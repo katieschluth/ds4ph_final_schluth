@@ -1,12 +1,9 @@
 import streamlit as st
 import pandas as pd
-from models import los_model, charges_model
-
-#los_model = joblib.load("los_model.pkl")
-#charges_model = joblib.load("charges_model.pkl")
+from models import los_model, charges_model, compare_los, compare_charges
 
 def main():
-    st.title("Estimate length of hospital stay and total charges based on location and demographic variables")
+    st.subheader("Enter a few things about yourself and your hospital stay")
     
     # Create dropdown menus for user input
     input_features = ["Hospital County", "Age Group", "Sex", "Race", "Ethnicity", "Type of Admission", "Form of Payment"]
@@ -20,23 +17,28 @@ def main():
         "Form of Payment": ['Medicare', 'Private Health Insurance', 'Medicaid','Blue Cross/Blue Shield', 'Self-Pay', 'Miscellaneous/Other','Managed Care, Unspecified', 'Department of Corrections','Federal/State/Local/VA']
     }
     user_inputs = [st.selectbox(f"Select {feature}", options=options[feature], key=feature) for feature in input_features]
-    
+
     # Process user input and run the regression model
     if st.button("Predict Length of Stay and Total Charges"):
         # Convert user inputs to a DataFrame or the required format for the model
         input_data = pd.DataFrame([user_inputs], columns=["hospital_county", "age_group", "gender", "race", "ethnicity", "type_of_admission", "payment_typology_1"])
         
         # Make predictions using the pre-trained model
-        predict_stay = los_model.predict(input_data)
-        predict_charges = charges_model.predict(input_data)
+        predict_stay = los_model.predict(input_data).iloc[0]
+        predict_charges = charges_model.predict(input_data).iloc[0]
         
         # Display the predictions
-        st.write("Predicted Length of Stay:")
-        st.write(predict_stay)
-        st.write("Predicted Total Charges:")
-        st.write(predict_charges)
+        st.subheader("Predicted Length of Stay:")
+        st.write(round(predict_stay)," days")
+        st.write("This is ",compare_los(predict_stay,input_data['hospital_county'].iloc[0]),"for your county")
+        #compare to state
         
+        st.subheader("Predicted Total Charges:")
+        st.write("$",round(predict_charges))
+        st.write("This is ",compare_charges(predict_charges,input_data['hospital_county'].iloc[0]),"for your county")
+    
         # You can also display additional information or visualizations based on the predictions
+
         
 # Run the app
 if __name__ == "__main__":
