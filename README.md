@@ -9,8 +9,6 @@ To Do:
 [x] Length of stay regression model  
 [x] Total charges regression model  
 [] __Streamlit app__  
-  * [] basic app with inputs  
-    * [] figure out how to make latitude and longitude input into county input for regression model   
-        * maybe using the pgeocode library?  
-  * [] feed inputs into regression models to display estimated total charges and length of stay  
+  * [x] basic app with inputs  
+  * [x] feed inputs into regression models to display estimated total charges and length of stay  
   * [] (maybe) feature that says 'Your estimated total charges are low/typical/high for your county'  
