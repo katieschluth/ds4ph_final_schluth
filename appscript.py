@@ -51,6 +51,7 @@ def main():
         fig_charge = go.Figure()
         fig_charge.add_trace(go.Box(x=tot_charges_df, orientation="h"))
         fig_charge.add_vline(x=predict_charges, line_width=3, line_dash="dash", line_color="red", annotation=dict(text="Your projected total charges"))
+        fig.update_layout(xaxis_range=[0, 1500000])
         fig_charge.update_yaxes(showticklabels=False)
         
         st.plotly_chart(fig_charge, use_container_width=True)
