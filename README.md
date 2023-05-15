@@ -9,10 +9,11 @@ More information can be found at: https://health.data.ny.gov/Health/Hospital-Inp
 
 ### App Functionality
 The app takes in user inputs and provides information about the following:   
-__Length of Stay:__  
+   
+__Length of Stay__ 
 _Predicted length of stay:_ Based on linear regression model trained on the NY dataset with covariates county, age, sex, race, ethnicity, type of admission, and form of payment
 _Comparison to county:_ Provides context of whether estimate is 'high', 'typical', or 'low' relative to their __admission type__ and shows boxplot visual of where their predicted length of stay falls relative to admission type distribution.
 
-__Total Charges:__  
+__Total Charges__  
 _Predicted total charges:_ Based on linear regression model trained on the NY dataset with covariates county, age, sex, race, ethnicity, type of admission, and form of payment
 _Comparison to county:_ Provides context of whether predicted charges are 'high', 'typical', or 'low' relative to their __county__ and shows boxplot visual of where their predicted charges fall relative to county distribution.
