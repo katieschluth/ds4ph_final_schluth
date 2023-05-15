@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from models import los_model, charges_model, compare_los, compare_charges
+import plotly.express as px
+from sodapy import Socrata
 
 def main():
     st.subheader("Enter a few things about yourself and your hospital stay")
@@ -31,13 +33,27 @@ def main():
         st.subheader("Predicted Length of Stay:")
         st.write(round(predict_stay)," days")
         st.write("This is ",compare_los(predict_stay,input_data['hospital_county'].iloc[0]),"for your county")
-        #compare to state
         
+        #compare to state
         st.subheader("Predicted Total Charges:")
         st.write("$",round(predict_charges))
         st.write("This is ",compare_charges(predict_charges,input_data['hospital_county'].iloc[0]),"for your county")
     
         # You can also display additional information or visualizations based on the predictions
+        import plotly.express as px
+        import plotly.graph_objects as go
+        # call in data for county to visualize
+        nyd2019_50k = pd.read_csv('total_charges.csv')
+        # subsetting only the data from the county selected
+        county_df = nyd2019_50k[nyd2019_50k["hospital_county"] == input_data['hospital_county'].iloc[0]]
+        tot_charges_df = county_df['total_charges']
+
+        fig_charge = go.Figure()
+        fig_charge.add_trace(go.Box(x=tot_charges_df, orientation="h"))
+        fig_charge.add_vline(x=predict_charges, line_width=3, line_dash="dash", line_color="red", annotation=dict(text="Your projected total charges"))
+        fig_charge.update_yaxes(showticklabels=False)
+        
+        st.plotly_chart(fig_charge, use_container_width=True)
 
         
 # Run the app
