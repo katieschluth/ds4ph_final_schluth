@@ -28,6 +28,7 @@ los_model = smf.ols(formula='length_of_stay ~ C(hospital_county) + C(age_group) 
 
 #converting total charges column to numeric values
 nyd2019_50k['total_charges'] = pd.to_numeric(nyd2019_50k['total_charges'])
+nyd2019_50k.to_csv('total_charges.csv', index=False)
 
 charges_model = smf.ols(formula='total_charges ~ C(hospital_county) + C(age_group) + C(gender) + C(race) + C(ethnicity) + C(type_of_admission) + C(payment_typology_1)', data=nyd2019_50k).fit()
 
