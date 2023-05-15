@@ -32,8 +32,8 @@ nyd2019_50k.to_csv('total_charges.csv', index=False)
 
 charges_model = smf.ols(formula='total_charges ~ C(hospital_county) + C(age_group) + C(gender) + C(race) + C(ethnicity) + C(type_of_admission) + C(payment_typology_1)', data=nyd2019_50k).fit()
 
-def compare_los(pred_los, county):
-    county_df = nyd2019_los[nyd2019_los["hospital_county"] == county]
+def compare_los(pred_los, type):
+    county_df = nyd2019_los[nyd2019_los["type_of_admission"] == type]
     q1, q2 = county_df["length_of_stay"].quantile([1/3, 2/3])
     if pred_los <q1:
         return 'low'
