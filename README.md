@@ -19,3 +19,6 @@ __Total Charges__
 _Predicted total charges:_ Based on linear regression model trained on the NY dataset with covariates county, age, sex, race, ethnicity, type of admission, and form of payment. 
 
 _Comparison to county:_ Provides context of whether predicted charges are 'high', 'typical', or 'low' relative to their __county__ and shows boxplot visual of where their predicted charges fall relative to county distribution.
+
+### App Demonstration
+Link: https://youtu.be/dHLHbmk3-6U
