@@ -21,4 +21,4 @@ _Predicted total charges:_ Based on linear regression model trained on the NY da
 _Comparison to county:_ Provides context of whether predicted charges are 'high', 'typical', or 'low' relative to their __county__ and shows boxplot visual of where their predicted charges fall relative to county distribution.
 
 ### App Demonstration
-Link: https://youtu.be/dHLHbmk3-6U
+Link: https://www.loom.com/share/5dbec227abd04d78b0e55b11f9249d6e
